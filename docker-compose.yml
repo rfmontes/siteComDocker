@@ -15,7 +15,12 @@ services:
 
   db:
     image: postgres:12-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
     environment:
       - POSTGRES_DB=appsitelg
       - POSTGRES_USER=postgressitelg
       - POSTGRES_PASSWORD=sitelg
+
+volumes:
+  postgres_data:
