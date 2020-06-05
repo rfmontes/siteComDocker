@@ -10,6 +10,8 @@ RUN apt-get update && \
 RUN mkdir /src
 WORKDIR /src
 
+ADD . .
+
 COPY ./requirements.txt /requirements.txt
 
 RUN pip install -r /requirements.txt
