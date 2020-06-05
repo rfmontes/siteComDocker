@@ -132,7 +132,12 @@
 <body>
 <header>
 	{% if user.is_authenticated %}
-		<div class="bem-vindo text-left text-body p-1 fixed-top">Bem vindo(a), <b>{{ user.first_name }}</b>
+		<div class="bem-vindo text-left text-body p-1 fixed-top">Bem vindo(a),
+			{% if user.first_name %}
+				<b>{{ user.first_name }}</b>
+			{% else %}
+				<b>{{ user }}</b>
+			{% endif %}
 		</div>
 		<div class="altera-senha text-right text-body p-1 fixed-top">
 			<a class="text-body" href="{% url 'url_editar_senha' %}">Alterar Senha</a> /
