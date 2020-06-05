@@ -1,0 +1,22 @@
+<script>
+
+	$('#criar-novo-grupo').click(function() {
+		var novoGrupo = $('#novoGrupo').val();
+
+        var criar_novo_grupo = $('#criar-novo-grupo-mensagem');
+        criar_novo_grupo.html('Salvando...');
+
+		$.ajax({
+		    type: "POST",
+		    url: "/material/grupo/",
+		    data: {
+		        grupo: novoGrupo
+		    },
+		    complete: function() {
+		        criar_novo_grupo.html('Salvar Grupo');
+		    }
+		})
+	})
+
+</script>
+

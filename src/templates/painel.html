@@ -1,0 +1,80 @@
+{% extends "base.html"%}
+{% load static %}
+{% block title %}Alterar Dados{% endblock %}
+{% block content %}
+{% for list in lista %}
+<p>Nome: {{ list.nome_completo }}</p>
+<p>CPF: {{ list.cpf }}</p>
+<p></p>
+{% endfor %}
+{% endblock %}
+
+<!--
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+	<title>Motoristas cadastrados</title>
+	<link rel="stylesheet" href="{% static 'cadastros/css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'cadastros/css/style.css' %}"/>
+</head>
+<style type="text/css"></style>
+<body>
+<header>
+	<main>
+		<div class="caixa">
+			<div class="imagen">
+				<img src="{% static 'cadastros/img/lg_logo_.png' %}" alt="logo">
+			</div>
+			<div class="nome">
+				<h1>Smart Cargo Control</h1>
+			</div>
+			<div class="bem-vindo">Bem vindo(a), <strong>{{ user }}</strong> /
+				<a class="bem-vindo" href="{% url 'url_editar_senha' %}">Alterar Senha</a> /
+				<a class="bem-vindo" href="{% url 'url_editar' %}">Alterar Dados</a> /
+				<a class="bem-vindo" href="{% url 'url_logout' %}">Encerrar sessão</a>
+			</div>
+			<div id="divBusca">
+				<input type="text" id="txtBusca" placeholder="Buscar..."/>
+				<button id="btnBusca">Buscar</button>
+			</div>
+		</div>
+		<div class="caixa1">
+			<nav class="menu">
+				<ul>
+					<a href="{% url 'url_index' %}"><li>Home</li></a>
+					<a><li>Cadastro
+						<ul>
+							<a href="{% url 'url_cad_empresa' %}"><li>Empresa</li></a>
+							<a href="{% url 'url_cad_motorista' %}"><li>Motorista</li></a>
+							<a href="{% url 'url_cad_caminhao' %}"><li>Caminhão</li></a>
+							<a href="{% url 'url_cad_coleta' %}"><li>Coleta</li></a>
+						</ul>
+					</li></a>
+					<a><li>Liberação de Entrada
+						<ul>
+							<li>Gravar tag RFID</li>
+							<li>Ler tag RFID</li>
+						</ul>
+					</li></a>
+					<a><li>Consulta LME</li></a>
+					<a href="{% url 'url_cad_coleta' %}"><li>COLETA</li></a>
+				</ul>
+			</nav>
+		</div>
+	</main>
+</header>
+{% for list in lista %}
+<p>Nome: {{ list.nome_completo }}</p>
+<p>CPF: {{ list.cpf }}</p>
+<p></p>
+{% endfor %}
+
+<div class="footer">
+	<p>Footer</p>
+</div>
+</body>
+</html>
+-->

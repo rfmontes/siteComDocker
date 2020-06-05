@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+	<title>{% block title %}{% endblock %}</title>
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+<div class="container">
+	<nav class="navbar navbar-expand-lg navbar-light bg-light">
+		<a class="navbar-brand" href="#">LG</a>
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Home</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cadastro</a>
+					<ul>
+						<a class="dropdown-item" href="#">Empresa</a>
+						<a class="dropdown-item" href="#">Motorista</a>
+						<a class="dropdown-item" href="#">Caminhão</a>
+					</ul>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Coleta</a>
+				</li>
+				<li class="nav-item active">
+					<a class="nav-link" href="#">Consulta</a>
+				</li>
+			</ul>
+			<form class="form-inline my-2 my-lg-0">
+				<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+				<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+			</form>
+		</div>
+	</nav>
+
+<!--
+<header>
+	<main>
+		<div class="caixa">
+			<div class="imagen">
+				<img src="{% static 'img/lg_logo_.png' %}" alt="logo">
+			</div>
+			<div class="nome">
+				<h1>Smart Cargo Control</h1>
+			</div>
+			<div class="bem-vindo">Bem vindo(a), <b>{{ user }}</b> /
+				<a class="bem-vindo" href="{% url 'url_editar_senha' %}">Alterar Senha</a> /
+				<a class="bem-vindo" href="{% url 'url_editar' %}">Alterar Dados</a> /
+				<a class="bem-vindo" href="{% url 'url_logout' %}">Encerrar sessão</a>
+			</div>
+			<form action="/busca/" method="GET">
+				<div id="divBusca">
+					<input type="text" id="txtBusca" name="busca" placeholder="Buscar... "/>
+					<button id="btnBusca">Buscar</button>
+				</div>
+			</form>
+		</div>
+		<div class="caixa1">
+			<nav class="menu">
+				<ul>
+					<a href="{% url 'url_index' %}"><li>Home</li></a>
+					<a><li>Cadastro
+						<ul>
+							<a href="{% url 'url_cad_empresa' %}"><li>Empresa</li></a>
+							<a href="{% url 'url_cad_motorista' %}"><li>Motorista</li></a>
+							<a href="{% url 'url_cad_caminhao' %}"><li>Caminhão</li></a>
+						</ul>
+					</li></a>
+					<a href="{% url 'url_cad_coleta' %}"><li>COLETA</li></a>
+					<a><li>Consultar
+						<ul>
+							<a href="{% url 'url_lista_empresa' %}"><li>Empresa</li></a>
+							<a href="{% url 'url_lista_motorista' %}"><li>Motorista</li></a>
+							<a href="{% url 'url_lista_caminhao' %}"><li>Caminhão</li></a>
+						</ul>
+					</li></a>
+				</ul>
+			</nav>
+		</div>
+	</main>
+</header>
+-->
+{% block content %}{% endblock %}
+<!--
+<div class="footer">
+	<p>Footer</p>
+</div>
+</body>
+</html>

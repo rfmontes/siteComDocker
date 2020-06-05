@@ -1,0 +1,107 @@
+{% extends "base.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Entrega{% endblock %}
+{% block content %}
+<div class="container padding-formulario2">
+	<h4 class="titulo-form">Cadastro de Entrega</h4>
+	<form class="jumbotron form-dividido" method="POST" id="formEntrega" data-urlmotoristas="{% url 'url_motorista_choices_ajax' %}" data-urlcaminhoes="{% url 'url_caminhao_choices_ajax' %}">
+		{% csrf_token %}
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="id_cartao_numero">Tag RFID<span class="asteriskField">*</span></label><br>
+				{{ form.cartao_numero }}
+			</div>
+			<div class="form-group col-md-6">
+				<label for="id_material">Material<span class="asteriskField">*</span></label><br>
+				{{ form.material }}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<label for="id_empresa_nome">Empresa<span class="asteriskField">*</span></label><br>
+				{{ form.empresa_nome }}
+			</div>
+			<div class="form-group col-md-4">
+				<label for="id_motorista_cpf">Motorista<span class="asteriskField">*</span></label><br>
+				{{ form.motorista_cpf }}
+			</div>
+			<div class="form-group col-md-4">
+				<label for="id_caminhao_placa">Caminhão<span class="asteriskField">*</span></label><br>
+				{{ form.caminhao_placa }}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<label for="id_peso_vazio">Peso do Caminhão Carregado (Kg)<span class="asteriskField">*</span></label><br>
+				{{ form.peso_vazio }}
+			</div>
+			<div class="form-group col-md-4">
+				<label for="id_peso_carregado">Peso do Caminhão vazio (Kg)<span class="asteriskField">*</span></label><br>
+				{{ form.peso_carregado }}
+			</div>
+		</div>
+
+		<button class="btn btn-secondary" type="submit">Finalizar</button>
+		<a href="{% url 'url_index' %}">
+			<button class="btn btn-secondary" type="button">Cancelar</button>
+		</a>
+
+	</form>
+</div>
+<script>
+{% block script %}
+
+	/** Filtro dropdown Motoristas */
+	$('#id_empresa_nome').change(function() {
+		var urlMotoristas = $('#formEntrega').attr("data-urlmotoristas");
+		var empresaIdMotorista = $(this).val();
+
+		$.ajax({
+			url: urlMotoristas,
+			data: {
+				'empresa': empresaIdMotorista
+			},
+			success: function(data) {
+				$('#id_motorista_cpf').html(data);
+			}
+		});
+
+	});
+
+	/** Filtro dropdown Caminhão */
+	$('#id_empresa_nome').change(function() {
+		var urlCaminhoes = $('#formEntrega').attr("data-urlcaminhoes");
+		var empresaIdCaminhao = $(this).val();
+		$.ajax({
+			url: urlCaminhoes,
+			data: {
+				'empresa': empresaIdCaminhao
+			},
+			success: function(data) {
+				$('#id_caminhao_placa').html(data);
+			}
+		});
+
+	});
+{% endblock %}
+</script>
+
+{% endblock %}
+
+<!--FORMULARIO HORIZONTAL-->
+<!--<main class="container padding-entrega">-->
+<!--	<div class="row justify-content-center">-->
+<!--		<div id="tela">-->
+<!--			<form method="POST">-->
+<!--				<h4 class="titulo-form">Entrega</h4>-->
+<!--				{% csrf_token %}-->
+<!--				<p>{{ form|crispy }}</p><br>-->
+<!--				<input class="btn-light font-detalhes" type="submit" value="Finalizar" />-->
+<!--				<a href="{% url 'url_index' %}">-->
+<!--					<input class="btn-light font-detalhes botao-cancelar" type="button" value="Cancelar" />-->
+<!--				</a>-->
+<!--			</form>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</main>-->

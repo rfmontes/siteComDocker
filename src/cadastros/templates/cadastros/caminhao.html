@@ -1,0 +1,66 @@
+{% extends "base.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Cadastro caminhão{% endblock %}
+{% block content %}
+<div class="container padding-formulario2">
+	<h4 class="titulo-form">Cadastro de Caminhão</h4>
+	<form class="jumbotron form-dividido" method="POST" id="formCaminhao">
+		{% csrf_token %}
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="id_placa">Placa<span class="asteriskField">*</span></label>
+				<div>
+					{{ form.placa }}
+					{% if form.placa.errors %}
+						{{ form.placa.errors }}
+					{% endif %}
+				</div>
+			</div>
+			<div class="form-group col-md-6">
+				<label for="id_marca">Marca<span class="asteriskField">*</span></label><br>
+					{{ form.marca }}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="id_modelo">Modelo<span class="asteriskField">*</span></label><br>
+				{{ form.modelo }}
+			</div>
+			<div class="form-group col-md-6">
+				<label for="id_cor">Cor<span class="asteriskField">*</span></label><br>
+				{{ form.cor }}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="form.empresa.id_for_label">Empresa<span class="asteriskField">*</span></label><br>
+				{{ form.empresa }}
+			</div>
+		</div>
+
+		<button class="btn btn-secondary" type="submit">Finalizar</button>
+		<a href="{% url 'url_index' %}">
+			<button class="btn btn-secondary" type="button">Cancelar</button>
+		</a>
+
+	</form>
+</div>
+{% endblock %}
+
+<!--FORMULARIO HORIZONTAL-->
+<!--<div class="container moto-cami-padding">-->
+<!--	<div class="row justify-content-center">-->
+<!--		<div id="tela">-->
+<!--			<h4 class="titulo-form">Cadastro de Caminhão</h4>-->
+<!--			<form method="POST" id="formCaminhao">-->
+<!--				{% csrf_token %}-->
+<!--				<p>{{ form|crispy }}</p><br>-->
+<!--				<input class="btn-light font-detalhes" type="submit" value="Finalizar" />-->
+<!--				<a href="{% url 'url_index' %}">-->
+<!--					<input class="btn-light font-detalhes botao-cancelar" type="button" value="Cancelar" />-->
+<!--				</a>-->
+<!--			</form>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->

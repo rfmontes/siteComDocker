@@ -1,0 +1,159 @@
+{% extends "base.html"%}
+{% load static %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="container cards-posicao">
+	{% include 'alertas.html' %}
+	<div class="row justify-content-center">
+		<div class="col-sl text-center">
+			<div class="card borda-tamanho3 m-4 col-12 col-md-4" style="width: 13.1rem;">
+				<div class="card-body p-0">
+					<h2 class="fonte-card">Empresa</h2>
+				</div>
+				<img class="imagem-borda-tamanho3" src="{% static 'img/empresa_.png' %}"><br>
+				{% if perms.cadastros.add_empresa %}
+				<a href="{% url 'url_cad_empresa' %}" class="card-link text-body link-opcao">Cadastrar</a>
+				{% endif %}
+				{% if perms.cadastros.view_empresa %}
+				<a href="{% url 'url_lista_empresa' %}" class="card-link text-body link-opcao">Listar</a>
+				{% endif %}
+			</div>
+		</div>
+		<div class="col-sl text-center">
+			<div class="card borda-tamanho3 m-4 col-12 col-md-4" style="width: 13.1rem;">
+				<div class="card-body p-0">
+					<h2 class="fonte-card">Motorista</h2>
+				</div>
+				<img class="imagem-borda-tamanho3" src="{% static 'img/motorista.png' %}"><br>
+				{% if perms.cadastros.add_motorista %}
+				<a href="{% url 'url_cad_motorista' %}" class="card-link text-body link-opcao">Cadastrar</a>
+				{% endif %}
+				{% if perms.cadastros.view_motorista %}
+				<a href="{% url 'url_lista_motorista' %}" class="card-link text-body link-opcao">Listar</a>
+				{% endif %}
+			</div>
+		</div>
+		<div class="col-sl text-center">
+			<div class="card borda-tamanho3 m-4 col-12 col-md-4" style="width: 13.1rem;">
+				<div class="card-body p-0">
+					<h2 class="fonte-card">Caminhão</h2>
+				</div>
+				<img class="imagem-borda-tamanho3" src="{% static 'img/caminhao_.png' %}"><br>
+				{% if perms.cadastros.add_caminhao %}
+				<a href="{% url 'url_cad_caminhao' %}" class="card-link text-body link-opcao">Cadastrar</a>
+				{% endif %}
+				{% if perms.cadastros.view_caminhao %}
+				<a href="{% url 'url_lista_caminhao' %}" class="card-link text-body link-opcao">Listar</a>
+				{% endif %}
+			</div>
+		</div>
+		<div class="col-sl text-center">
+			<div class="card borda-tamanho3 m-4 col-12 col-md-4" style="width: 13.1rem;">
+				<div class="card-body p-0">
+					<h2 class="fonte-card">Material</h2>
+				</div>
+				<img class="imagem-borda-tamanho3" src="{% static 'img/material1.png' %}"><br>
+				{% if perms.cadastros.add_material %}
+				<a href="{% url 'url_cad_material' %}" class="card-link text-body link-opcao">Cadastrar</a>
+				{% endif %}
+				{% if perms.cadastros.view_material %}
+				<a href="{% url 'url_lista_material' %}" class="card-link text-body link-opcao">Listar</a>
+				{% endif %}
+			</div>
+		</div>
+		<div class="col-sl text-center">
+			<div class="card borda-tamanho3 m-4 col-12 col-md-4" style="width: 13.1rem;">
+				<div class="card-body p-0">
+					<h2 class="fonte-card">Coleta</h2>
+				</div>
+				<img class="imagem-borda-tamanho3" src="{% static 'img/coleta.png' %}"><br>
+				{% if perms.eventos.add_coleta %}
+				<a href="{% url 'url_cad_coleta' %}" class="card-link text-body link-opcao">Cadastrar</a>
+				{% endif %}
+				{% if perms.eventos.view_coleta %}
+				<a href="{% url 'url_lista_coleta' %}" class="card-link text-body link-opcao">Listar</a>
+				{% endif %}
+			</div>
+		</div>
+		<div class="col-sl text-center">
+			<div class="card borda-tamanho3 m-4 col-12 col-md-4" style="width: 13.1rem;">
+				<div class="card-body p-0">
+					<h2 class="fonte-card">Entrega</h2>
+				</div>
+				<img class="imagem-borda-tamanho3" src="{% static 'img/entrega.png' %}"><br>
+				{% if perms.eventos.add_entrega %}
+				<a href="{% url 'url_cad_entrega' %}" class="card-link text-body link-opcao">Cadastrar</a>
+				{% endif %}
+				{% if perms.eventos.view_entrega %}
+				<a href="{% url 'url_lista_entrega' %}" class="card-link text-body link-opcao">Listar</a>
+				{% endif %}
+			</div>
+		</div>
+  </div>
+</div>
+<!--<p>Voce visitou essa pagina {{ num_visits }} {% if num_visits == 1%} vez {% else%} vezes {% endif%}.</p>-->
+{% endblock %}
+
+<!--		BOTÕES LATERAIS-->
+<!--		<div class="btn-group-vertical">-->
+<!--			<div class="btn-group dropright">-->
+<!--				<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--					EMPRESA-->
+<!--				</button>-->
+<!--				<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">-->
+<!--					<a class="dropdown-item" href="#">Cadastrar</a>-->
+<!--					<div class="dropdown-divider"></div>-->
+<!--					<a class="dropdown-item" href="#">Listar</a>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--			<div class="btn-group dropright">-->
+<!--				<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--					MOTORISTA-->
+<!--				</button>-->
+<!--				<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">-->
+<!--					<a class="dropdown-item" href="#">Cadastrar</a>-->
+<!--					<div class="dropdown-divider"></div>-->
+<!--					<a class="dropdown-item" href="#">Listar</a>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--				<div class="btn-group dropright">-->
+<!--					<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--					CAMINHÃO-->
+<!--				</button>-->
+<!--				<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">-->
+<!--					<a class="dropdown-item" href="#">Cadastrar</a>-->
+<!--					<div class="dropdown-divider"></div>-->
+<!--					<a class="dropdown-item" href="#">Listar</a>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--				<div class="btn-group dropright">-->
+<!--					<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--					MATERIAL-->
+<!--				</button>-->
+<!--				<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">-->
+<!--					<a class="dropdown-item" href="#">Cadastrar</a>-->
+<!--					<div class="dropdown-divider"></div>-->
+<!--					<a class="dropdown-item" href="#">Listar</a>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--				<div class="btn-group dropright">-->
+<!--					<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--					COLETA-->
+<!--				</button>-->
+<!--				<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">-->
+<!--					<a class="dropdown-item" href="#">Cadastrar</a>-->
+<!--					<div class="dropdown-divider"></div>-->
+<!--					<a class="dropdown-item" href="#">Listar</a>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--				<div class="btn-group dropright">-->
+<!--					<button type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--					ENTREGA-->
+<!--				</button>-->
+<!--				<div class="dropdown-menu" aria-labelledby="btnGroupDrop1">-->
+<!--					<a class="dropdown-item" href="#">Cadastrar</a>-->
+<!--					<div class="dropdown-divider"></div>-->
+<!--					<a class="dropdown-item" href="#">Listar</a>-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->

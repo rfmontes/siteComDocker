@@ -1,0 +1,150 @@
+{% extends "base.html"%}
+{% load static %}
+{% block title %}Busca{% endblock %}
+{% block buscar %}
+<form class="form-inline my-2 my-lg-0" action="{% url 'url_busca_empresa' %}">
+	<input class="form-control mr-sm-2" id="buscar" name="buscar" type="search" style="width: 230px;" placeholder="Buscar..." aria-label="Search">
+	<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Buscar</button>
+</form>
+{% endblock %}
+{% block content %}
+
+{% if perms.cadastros.add_empresa %}
+<a href="{% url 'url_cad_empresa' %}">
+	<th scope="col"><button type="button" class="btn btn-dark font-detalhes">Nova Empresa</button></th>
+</a>
+{% endif %}
+
+{% if perms.cadastros.view_empresa %}
+<a href="{% url 'url_lista_empresa' %}">
+	<th scope="col"><button type="button" class="btn btn-dark font-detalhes">Listar</button></th>
+</a>
+{% endif %}
+
+<h4 class="titulo-form justify-content-center">Resultado da Busca: {{ request.GET.buscar }}</h4>
+
+{% if lista %}
+<div class="table-responsive">
+	<table class="table table-bordered table-hover jumbotron lista-fonte text-center">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">Nome da Empresa</th>
+			<th scope="col">CNPJ</th>
+			<th scope="col">CEP</th>
+			<th scope="col">Endereço</th>
+			<th scope="col">Bairro</th>
+			<th scope="col">Cidade</th>
+			<th scope="col">UF</th>
+			<th scope="col">Responsavel</th>
+			<th scope="col">Telefone1</th>
+			<th scope="col">Telefone2</th>
+			<th scope="col">Área de Atuação</th>
+
+			{% if perms.cadastros.change_empresa %}
+			<th scope="col">Editar</th>
+			{% endif %}
+
+			{% if perms.cadastros.delete_empresa %}
+			<th scope="col">Excluir</th>
+			{% endif %}
+
+		</tr>
+		</thead>
+
+		{% for list in lista %}
+		<tbody>
+		<tr>
+			<th scope="row">{{ list.nome_empresa }}</th>
+			<td>{{ list.cnpj }}</td>
+			<td>{{ list.cep }}</td>
+			<td>{{ list.endereco }}</td>
+			<td>{{ list.bairro }}</td>
+			<td>{{ list.cidade }}</td>
+			<td>{{ list.uf }}</td>
+
+			{% if list.responsavel %}
+			<td>{{ list.responsavel }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			{% if list.telefone1 %}
+			<td>{{ list.telefone1 }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			{% if list.telefone2 %}
+			<td>{{ list.telefone2 }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			{% if list.area_atuacao %}
+			<td>{{ list.area_atuacao }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			{% if perms.cadastros.change_empresa %}
+			<td>
+				<a class="card-link" href="{% url 'url_editar_empresa' list.id %}">
+					<!--Ícone de edição-->
+					<svg class="bi bi-pencil-square text-dark" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
+						<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z" clip-rule="evenodd"/>
+					</svg>
+				</a>
+			</td>
+			{% endif %}
+
+			{% if perms.cadastros.delete_empresa %}
+			<td> X </td>
+			{% endif %}
+
+		</tr>
+		</tbody>
+		{% endfor %}
+
+	</table>
+</div>
+{% include 'paginacao.html' %}
+{% else %}
+<ul class="text-center">
+	<p class="busca-resultado">Não encontrado</p>
+</ul>
+{% endif %}
+
+{% endblock %}
+
+
+<!--<div class="container ajuste-busca">-->
+<!--	<div class="row justify-content-center">-->
+<!--		<div class="card lista-posicao" style="width: 30rem;">-->
+<!--			<div class="card-header">Resultado da Busca: {{ request.GET.buscar }}</div>-->
+<!--			{% if lista %}-->
+<!--			<ul class="list-group list-group-flush">-->
+<!--				{% for list in lista %}-->
+<!--				<li class="list-group-item">-->
+<!--					Nome: {{ list.nome_empresa }}-->
+<!--					<p>CNPJ:  {{ list.cnpj }}-->
+<!--						<a href="{% url 'url_detalhes_empresa' list.id %}">-->
+<!--							&lt;!&ndash;Ícone mais informações&ndash;&gt;-->
+<!--							<svg class="bi bi-plus-square text-success" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
+<!--								<path fill-rule="evenodd" d="M8 3.5a.5.5 0 01.5.5v4a.5.5 0 01-.5.5H4a.5.5 0 010-1h3.5V4a.5.5 0 01.5-.5z" clip-rule="evenodd"/>-->
+<!--								<path fill-rule="evenodd" d="M7.5 8a.5.5 0 01.5-.5h4a.5.5 0 010 1H8.5V12a.5.5 0 01-1 0V8z" clip-rule="evenodd"/>-->
+<!--								<path fill-rule="evenodd" d="M14 1H2a1 1 0 00-1 1v12a1 1 0 001 1h12a1 1 0 001-1V2a1 1 0 00-1-1zM2 0a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V2a2 2 0 00-2-2H2z" clip-rule="evenodd"/>-->
+<!--							</svg>-->
+<!--						</a>-->
+<!--					</p>-->
+<!--				</li>-->
+<!--				{% endfor %}-->
+<!--			</ul>-->
+<!--			{% else %}-->
+<!--			<ul class="list-group list-group-flush">-->
+<!--				<li class="list-group-item">Não encontrado</li>-->
+<!--			</ul>-->
+<!--			{% endif %}-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->

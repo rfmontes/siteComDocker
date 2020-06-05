@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for motorista in motoristas %}
+    <option value="{{ motorista.pk }}">{{ motorista.cpf }}</option>
+{% endfor %}

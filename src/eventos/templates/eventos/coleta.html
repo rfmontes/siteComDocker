@@ -1,0 +1,142 @@
+{% extends "base.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Coleta{% endblock %}
+{% block content %}
+
+<div class="container padding-formulario1">
+	<h4 class="titulo-form">Cadastro de Coleta</h4>
+	<form class="jumbotron form-dividido" method="POST" id="formColeta" data-urlmotoristas="{% url 'url_motorista_choices_ajax' %}" data-urlcaminhoes="{% url 'url_caminhao_choices_ajax' %}">
+		{% csrf_token %}
+
+		<div class="form-row">
+			<div class="form-group col-md-6 requiredField">
+				<label for="id_quant_retiradas">Retiradas<span class="asteriskField">*</span></label><br>
+				{{ form.quant_retiradas }}
+			</div>
+			<div class="form-group col-md-6 requiredField">
+				<label for="id_cartao_numero">Tag RFID<span class="asteriskField">*</span></label><br>
+				{{ form.cartao_numero }}
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<label for="id_empresa_nome">Empresa<span class="asteriskField">*</span></label><br>
+				{{ form.empresa_nome }}
+			</div>
+			<div class="form-group col-md-4">
+				<label for="id_motorista_cpf">Motorista<span class="asteriskField">*</span></label><br>
+				{{ form.motorista_cpf }}
+			</div>
+			<div class="form-group col-md-4">
+				<label for="id_caminhao_placa">Caminhão<span class="asteriskField">*</span></label><br>
+				{{ form.caminhao_placa }}
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-md-6">
+				<label for="id_grupo">Grupo</label><br>
+				{{ form.grupo }}
+			</div>
+			<div class="form-group col-md-6">
+				<label for="id_material">Material</label><br>
+				{{ form.material }}
+			</div>
+		</div>
+
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<label for="{{ form.peso_vazio.id_for_label }}">Peso do Caminhão vazio (Kg)<span class="asteriskField">*</span></label><br>
+				{{ form.peso_vazio }}
+			</div>
+			<div class="form-group col-md-4">
+				<label for="{{ form.peso_carregado.id_for_label }}">Peso do Caminhão carregado (Kg)<span class="asteriskField">*</span></label><br>
+				{{ form.peso_carregado }}
+			</div>
+		</div>
+
+<!--		<div class="form-row">-->
+<!--			<a class="btn btn-success" href="#" id="addInput">-->
+<!--				Adicionar Grupo-->
+<!--			</a>-->
+<!--			<br/>-->
+<!--			<div id="dynamicDiv">-->
+
+<!--			</div>-->
+<!--		</div>-->
+<!--		<br/>-->
+
+		<button class="btn btn-secondary" type="submit">Finalizar</button>
+		<a href="{% url 'url_index' %}">
+			<button class="btn btn-secondary" type="button">Cancelar</button>
+		</a>
+
+	</form>
+</div>
+<script>
+{% block script %}
+	/** Filtro dropdown Motoristas */
+	$('#id_empresa_nome').change(function() {
+		var urlMotoristas = $('#formColeta').attr("data-urlmotoristas");
+		var empresaIdMotorista = $(this).val();
+
+		$.ajax({
+			url: urlMotoristas,
+			data: {
+				'empresa': empresaIdMotorista
+			},
+			success: function(data) {
+				$('#id_motorista_cpf').html(data);
+			}
+		});
+
+	});
+
+	/** Filtro dropdown Caminhão */
+	$('#id_empresa_nome').change(function() {
+		var urlCaminhoes = $('#formColeta').attr("data-urlcaminhoes");
+		var empresaIdCaminhao = $(this).val();
+		$.ajax({
+			url: urlCaminhoes,
+			data: {
+				'empresa': empresaIdCaminhao
+			},
+			success: function(data) {
+				$('#id_caminhao_placa').html(data);
+			}
+		});
+
+	});
+
+	/** Muda escrita do botão */
+	$("form").submit(function() {
+  		$("#finalizar").prop('value', 'Buscando dados LME...').prop('disabled', true);
+	});
+
+
+{% endblock %}
+</script>
+
+{% endblock %}
+<!--	/** Campo dinamico */-->
+<!--	$(function () {-->
+<!--		var scntDiv = $('#dynamicDiv');-->
+
+<!--		$(document).on('click', '#addInput', function () {-->
+
+<!--			$('<p>'+-->
+<!--				'{{ form.grupo }}'+-->
+<!--				'<a class="btn btn-danger" href="#" id="remInput">'+-->
+<!--					'Remover Grupo'+-->
+<!--				'</a>'+-->
+<!--			'</p>').appendTo(scntDiv);-->
+<!--			return false;-->
+<!--		});-->
+
+<!--		$(document).on('click', '#remInput', function() {-->
+<!--			$(this).parents('p').remove();-->
+<!--			return false;-->
+<!--		});-->
+<!--	});-->

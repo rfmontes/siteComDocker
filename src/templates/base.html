@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+	<title>{% block title %}{% endblock %}</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.mask.min.js"></script>
+	<script type="text/javascript" src="/static/js/additional-methods.js"></script>
+	<script type="text/javascript" src="/static/js/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="/static/js/localization/messages_pt_BR.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+	<script type="text/javascript">
+
+	/** Validação dos Formulários */
+	jQuery.validator.addMethod("validaCnpj", function(value, element) {
+		if (value.length == 18) {
+			return true
+		}else{
+			return false
+		}
+	}, "Digite um CNPJ valido!")
+
+	jQuery.validator.addMethod("validaCep", function(value, element) {
+		if (value.length == 9) {
+			return true
+		}else{
+			return false
+		}
+	}, "Digite um CEP valido!")
+
+	jQuery.validator.addMethod("validaCpf", function(value, element) {
+		if (value.length == 14 ) {
+			return true
+		}else{
+			return false
+		}
+	}, "Digite um CPF valido!")
+
+	jQuery.validator.addMethod("validaPlaca", function(value, element) {
+		if (value.length == 7 ) {
+			return true
+		}else{
+			return false
+		}
+	}, "Digite uma PLACA valida!")
+
+	/** Aguarda carregamento da pagina */
+	$(document).ready(function() {
+
+		/** Aplicação de máscaras */
+		$("#id_cpf").mask("000.000.000-9X", {
+			translation: {
+				'X': {pattern: /[xX0-9]/}
+			}
+		})
+		$("#id_cnpj").mask("00.000.000/0000-00")
+		$("#id_telefone1").mask("(00) 0000-00009")
+		$("#id_telefone1").blur(function(event){
+			if ($(this).val().length == 15) {
+				$("#id_telefone1").mask("(00) 00000-0009")
+			}else{
+				$("#id_telefone1").mask("(00) 0000-00009")
+			}
+		})
+		$("#id_telefone2").mask("(00) 0000-00009")
+		$("#id_telefone2").blur(function(event){
+			if ($(this).val().length == 15) {
+				$("#id_telefone2").mask("(00) 00000-0009")
+			}else{
+				$("#id_telefone2").mask("(00) 0000-00009")
+			}
+		})
+		$("#id_cep").mask("00000-000")
+		$("#id_placa").mask("AAA0B00", {
+			translation: {
+				'A': {pattern: /[a-zA-Z]/},
+				'B': {pattern: /[a-zA-Z0-9]/}
+			}
+		})
+
+		/** Aplicação dos validadores */
+		$("#formEmpresa").validate({
+			rules:{
+				cnpj: {
+					validaCnpj: true
+				},
+				cep: {
+					validaCep: true
+				},
+			}
+		})
+
+		$("#formMotorista").validate({
+			rules:{
+				cpf: {
+					validaCpf: true
+				},
+			}
+		})
+
+		$("#formCaminhao").validate({
+			rules:{
+				placa: {
+					validaPlaca: true
+				},
+			}
+		})
+
+		/** Autocomplete select2 */
+		$('.select').select2();
+
+		/** Fechar Alertas após 2 segundos */
+		window.setTimeout(function() {
+			$('.alert').fadeTo(500, 0).slideUp(500, function() {
+				$(this).remove();
+			});
+		}, 2000);
+
+	})
+	{% block script %}{% endblock %}
+	</script>
+</head>
+<body>
+<header>
+	{% if user.is_authenticated %}
+		<div class="bem-vindo text-left text-body p-1 fixed-top">Bem vindo(a), <b>{{ user.first_name }}</b>
+		</div>
+		<div class="altera-senha text-right text-body p-1 fixed-top">
+			<a class="text-body" href="{% url 'url_editar_senha' %}">Alterar Senha</a> /
+			<a class="text-body" href="{% url 'url_editar' %}">Alterar Dados</a> /
+			<a class="text-body" href="{% url 'url_logout' %}">Encerrar sessão</a>
+		</div>
+	{% else %}
+		<div class="bem-vindo text-center text-body p-1 fixed-top">Bem vindo ao sistema Smart Cargo Control!</div>
+	{% endif %}
+</header>
+<div class="container-fluid p-0">
+	<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top fixed-altura">
+		<a class="navbar-brand mb-0 display-1" href="{% url 'url_index' %}">
+			<img src="/static/img/lg_logo_.png" width="90" class="d-inline-block align-top">
+			<span class="navbar-brand mb-0 h1 smart-fonte">SmartCargoControl</span>
+		</a>
+		{% if user.is_authenticated %}
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto menu-fonte">
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'url_index' %}"><h5>HOME</h5><span class="sr-only">(current)</span></a>
+					</li>
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownCadastro" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							CADASTRO
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							{% if perms.cadastros.add_empresa %}
+							<a class="dropdown-item" href="{% url 'url_cad_empresa' %}">Empresa</a>
+							<div class="dropdown-divider"></div>
+							{% endif %}
+							{% if perms.cadastros.add_motorista %}
+							<a class="dropdown-item" href="{% url 'url_cad_motorista' %}">Motorista</a>
+							<div class="dropdown-divider"></div>
+							{% endif %}
+							{% if perms.cadastros.add_caminhao %}
+							<a class="dropdown-item" href="{% url 'url_cad_caminhao' %}">Caminhão</a>
+							<div class="dropdown-divider"></div>
+							{% endif %}
+							{% if perms.cadastros.add_material %}
+							<a class="dropdown-item" href="{% url 'url_cad_material' %}">Material</a>
+							{% endif %}
+						</div>
+					</li>
+					{% if perms.eventos.add_coleta %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'url_cad_coleta' %}">COLETA</a>
+					</li>
+					{% endif %}
+					{% if perms.eventos.add_entrega %}
+					<li class="nav-item">
+						<a class="nav-link" href="{% url 'url_cad_entrega' %}">ENTREGA</a>
+					</li>
+					{% endif %}
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownConsulta" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							CONSULTA
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+							{% if perms.cadastros.view_empresa %}
+							<a class="dropdown-item" href="{% url 'url_lista_empresa' %}">Empresa</a>
+							<div class="dropdown-divider"></div>
+							{% endif %}
+							{% if perms.cadastros.view_motorista %}
+							<a class="dropdown-item" href="{% url 'url_lista_motorista' %}">Motorista</a>
+							<div class="dropdown-divider"></div>
+							{% endif %}
+							{% if perms.cadastros.view_caminhao %}
+							<a class="dropdown-item" href="{% url 'url_lista_caminhao' %}">Caminhão</a>
+							<div class="dropdown-divider"></div>
+							{% endif %}
+							{% if perms.cadastros.view_material %}
+							<a class="dropdown-item" href="{% url 'url_lista_material' %}">Material</a>
+							<div class="dropdown-divider"></div>
+							{% endif %}
+							{% if perms.eventos.view_coleta %}
+							<a class="dropdown-item" href="{% url 'url_lista_coleta' %}">Coleta</a>
+							<div class="dropdown-divider"></div>
+							{% endif %}
+							{% if perms.eventos.view_entrega %}
+							<a class="dropdown-item" href="{% url 'url_lista_entrega' %}">Entrega</a>
+							{% endif %}
+						</div>
+					</li>
+				</ul>
+				{% block buscar %}
+				<!--
+				<form class="form-inline my-2 my-lg-0">
+					<input class="form-control mr-sm-2" type="search" placeholder="" aria-label="Search">
+					<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Buscar</button>
+				</form>
+				-->
+				{% endblock %}
+			{% endif %}
+		</div>
+	</nav>
+	<main class="produtos">
+    {% block content %}{% endblock %}
+	</main>
+	<footer class="footer p-2 bg-dark fixed-bottom">
+		<p class="text-secondary m-0 text-center">Versão - 1.1.5</p>
+	</footer>
+</div>
+
+{% include 'cadastros/grupo_modal.js.html' %}
+
+</body>
+</html>

@@ -1,0 +1,80 @@
+{% extends "base.html"%}
+{% load static %}
+{% block title %}Caminhão Detalhes{% endblock %}
+{% block buscar %}
+<form class="form-inline my-2 my-lg-0" action="{% url 'url_busca_caminhao' %}">
+	<input class="form-control mr-sm-2" id="buscar" name="buscar" type="search" placeholder="Buscar..." aria-label="Search">
+	<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Buscar</button>
+</form>
+{% endblock %}
+{% block content %}
+{% if perms.cadastros.add_caminhao %}
+<a href="{% url 'url_cad_caminhao' %}">
+	<th scope="col"><button type="button" class="btn btn-dark font-detalhes">Novo Caminhão</button></th>
+</a>
+{% endif %}
+
+{% if perms.cadastros.view_caminhao %}
+<a href="{% url 'url_lista_caminhao' %}">
+	<th scope="col"><button type="button" class="btn btn-dark font-detalhes">Listar</button></th>
+</a>
+{% endif %}
+
+{% include 'alertas.html' %}
+<h4 class="titulo-form">Caminhão</h4>
+<div class="table-responsive">
+	<table class="table table-bordered table-hover jumbotron lista-fonte text-center">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">Placa</th>
+			<th scope="col">Marca</th>
+			<th scope="col">Modelo</th>
+			<th scope="col">Cor</th>
+			<th scope="col">Empresa</th>
+
+			{% if perms.cadastros.change_caminhao %}
+			<th scope="col">Editar</th>
+			{% endif %}
+
+			{% if perms.cadastros.delete_caminhao %}
+			<th scope="col">Excluir</th>
+			{% endif %}
+
+		</tr>
+		</thead>
+
+		<tbody>
+		<tr>
+			<th scope="row">{{ caminhao.placa }}</th>
+			<td>{{ caminhao.marca }}</td>
+			<td>{{ caminhao.modelo }}</td>
+			<td>{{ caminhao.cor }}</td>
+
+			<td> |
+			{% for empresa in caminhao.empresa.all %}
+				{{ empresa.nome_empresa }} |
+			{% endfor %}
+			</td>
+
+			{% if perms.cadastros.change_caminhao %}
+			<td>
+				<a class="card-link" href="{% url 'url_editar_caminhao' caminhao.id %}">
+					<!--Ícone de edição-->
+					<svg class="bi bi-pencil-square text-dark" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
+						<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z" clip-rule="evenodd"/>
+					</svg>
+				</a>
+			</td>
+			{% endif %}
+
+			{% if perms.cadastros.delete_caminhao %}
+			<td> X </td>
+			{% endif %}
+
+		</tr>
+		</tbody>
+
+	</table>
+</div>
+{% endblock %}

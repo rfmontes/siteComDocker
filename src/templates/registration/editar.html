@@ -1,0 +1,31 @@
+{% extends "base.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Alterar Dados{% endblock %}
+{% block content %}
+<main class="container">
+	<div class="row justify-content-center">
+		<div id="tela">
+            <form method="POST">
+                {% csrf_token %}
+                <h4 class="titulo-form">Alterar Dados</h4>
+                {% if sucess %}
+                    <p style="color: green; font-family: Arial, sans-serif;">Dados alterados com sucesso!</p>
+                {% endif %}
+                {{ form|crispy }}
+<!--                {% for field in form %}-->
+<!--                    <p></p><br>-->
+<!--                    {{ field.label_tag }}-->
+<!--                    {{ field }}-->
+<!--                    {{ field.errors }}-->
+<!--                {% endfor %}-->
+                <p></p><br>
+                <input class="btn-light font-detalhes" type="submit" value="Alterar Dados" />
+                <a href="{% url 'url_index' %}">
+                    <input class="btn-light font-detalhes botao-cancelar" type="button" value="Cancelar" />
+                </a>
+            </form>
+		</div>
+	</div>
+</main>
+{% endblock %}

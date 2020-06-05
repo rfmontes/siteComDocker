@@ -1,0 +1,96 @@
+{% extends "base.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="container">
+	<div class="row justify-content-center menu-fonte">
+		<div id="tela">
+
+            <form action="submit" method="POST">
+                {% csrf_token %}
+                <h4 class="titulo-form">Login</h4>
+                {{ form.as_p }}
+                <p>
+                    <label for="usuario">Usuario</label><br>
+                    <input class="login-input" id="usuario" name="usuario" required="required" type="text" placeholder="" />
+                </p><br>
+                <p >
+                    <label for="senha">Senha</label><br>
+                    <input class="login-input" id="senha" name="senha" required="required" type="password" placeholder="" />
+                </p><br>
+                {% for message in messages %}
+                <div class="errorlist text-center">
+                    <strong>Erro!</strong>{{ message }}
+                </div><br>
+                {% endfor %}
+                <p class="text-center">
+                    <input class="btn-light font-detalhes login-input" type="submit" value="Entrar"/>
+                </p>
+                <p class="menu-fonte text-center mt-2">Não é cadastrado?<a href="{% url 'url_cria_usuario' %}"> Cadastre-se</a></p>
+                <p class="menu-fonte text-center mt-2"><a href="{% url 'password_reset' %}"> Esqueceu sua senha?</a></p>
+            </form>
+        </div>
+	</div>
+</div>
+{% endblock %}
+
+
+
+<!-- <!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+	<title>Login</title>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}"/>
+</head>
+<body>
+<header>
+    <div class="caixa">
+        <div class="imagem">
+            <img src="{% static 'img/lg_logo_.png' %}" alt="logo">
+        </div>
+        <div class="nome">
+            <h1>Smart Cargo Control</h1>
+        </div>
+</header>
+<main class="login">
+    <div class="container">
+        <div class="content">
+            <div id="tela">
+                <form action="submit" method="POST">
+                    {% csrf_token %}
+                    <h4>Login</h4>
+                    {{ form.as_p }}
+                    <p>
+                        <label for="usuario">Usuario</label>
+                        <input id="usuario" name="usuario" required="required" type="text" placeholder="" />
+                    </p>
+                    <p>
+                        <label for="senha">Senha</label>
+                        <input id="senha" name="senha" required="required" type="password" placeholder="" />
+                    </p>
+                    <p>
+                        {% for message in messages %}
+                            <div class="alert">
+                                <strong>Erro!</strong>{{ message }}
+                            </div>
+                        {% endfor %}
+                        <input type="submit" value="Entrar"/>
+                    </p>
+                    <p>Não é cadastrado?<a href="{% url 'url_cria_usuario' %}"> Cadastre-se</a></p>
+                    <a class=""></a>
+                </form>
+            </div>
+        </div>
+    </div>
+</main>
+	<footer class="footer p-3">
+		<p class="text-white m-0 text-center">Versão - 1.2</p>
+	</footer>
+</body>
+</html>

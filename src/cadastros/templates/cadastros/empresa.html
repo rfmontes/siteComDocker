@@ -1,0 +1,97 @@
+{% extends "base.html"%}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}Cadastro Empresa{% endblock %}
+{% block content %}
+<div class="container padding-formulario1">
+	<h4 class="titulo-form">Cadastro de Empresa</h4>
+	<form class="jumbotron form-dividido" method="POST" id="formEmpresa">
+		{% csrf_token %}
+		<div class="form-row">
+			<div class="form-group col-md-7">
+				<label for="id_nome_empresa">Nome da Empresa<span class="asteriskField">*</span></label>
+				<div>
+					{{ form.nome_empresa }}
+					{% if form.nome_empresa.errors %}
+						{{ form.nome_empresa.errors }}
+					{% endif %}
+				</div>
+			</div>
+			<div class="form-group col-md-5">
+				<label for="id_cnpj">CNPJ<span class="asteriskField">*</span></label>
+				<div>
+					{{ form.cnpj }}
+					{% if form.cnpj.errors %}
+						{{ form.cnpj.errors }}
+					{% endif %}
+				</div>
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-4">
+				<label for="id_cep">CEP<span class="asteriskField">*</span></label><br>
+				{{ form.cep }}
+			</div>
+			<div class="form-group col-md-8">
+				<label for="id_endereco">Endereço<span class="asteriskField">*</span></label><br>
+				{{ form.endereco }}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-5">
+				<label for="id_bairro">Bairro<span class="asteriskField">*</span></label><br>
+				{{ form.bairro }}
+			</div>
+			<div class="form-group col-md-5">
+				<label for="id_cidade">Cidade<span class="asteriskField">*</span></label><br>
+				{{ form.cidade }}
+			</div>
+			<div class="form-group col-md-2">
+				<label for="id_uf">UF<span class="asteriskField">*</span></label><br>
+				{{ form.uf }}
+			</div>
+		</div>
+		<div class="form-row">
+			<div class="form-group col-md-3">
+				<label for="id_responsavel">Responsável</label><br>
+				{{ form.responsavel }}
+			</div>
+			<div class="form-group col-md-3">
+				<label for="id_telefone1">Telefone 1</label><br>
+				{{ form.telefone1 }}
+			</div>
+			<div class="form-group col-md-3">
+				<label for="id_telefone2">Telefone 2</label><br>
+				{{ form.telefone2 }}
+			</div>
+			<div class="form-group col-md-3">
+				<label for="id_area_atuacao">Área de Atuação</label><br>
+				{{ form.area_atuacao }}
+			</div>
+		</div>
+
+		<button class="btn btn-secondary" type="submit">Finalizar</button>
+		<a href="{% url 'url_index' %}">
+			<button class="btn btn-secondary" type="button">Cancelar</button>
+		</a>
+
+	</form>
+</div>
+{% endblock %}
+
+<!--FORMULARIO HORIZONTAL-->
+<!--<div class="container">-->
+<!--	<div class="row justify-content-center">-->
+<!--		<div id="tela">-->
+<!--			<form method="POST" id="formEmpresa">-->
+<!--				<h4 class="titulo-form">Cadastro de Empresa</h4>-->
+<!--				{% csrf_token %}-->
+<!--				<p>{{ form|crispy }}</p><br>-->
+<!--				<input class="btn-light font-detalhes" type="submit" value="Finalizar" />-->
+<!--				<a href="{% url 'url_index' %}">-->
+<!--					<input class="btn-light font-detalhes botao-cancelar" type="button" value="Cancelar" />-->
+<!--				</a>-->
+<!--			</form>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--</div>-->

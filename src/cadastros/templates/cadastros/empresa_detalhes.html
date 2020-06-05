@@ -1,0 +1,109 @@
+{% extends "base.html"%}
+{% load static %}
+{% block title %}Empresa Detalhes{% endblock %}
+{% block buscar %}
+<form class="form-inline my-2 my-lg-0" action="{% url 'url_busca_empresa' %}">
+	<input class="form-control mr-sm-2" id="buscar" name="buscar" type="search" placeholder="Buscar..." aria-label="Search">
+	<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Buscar</button>
+</form>
+{% endblock %}
+{% block content %}
+
+{% if perms.cadastros.add_empresa %}
+<a href="{% url 'url_cad_empresa' %}">
+	<th scope="col"><button type="button" class="btn btn-dark font-detalhes">Nova Empresa</button></th>
+</a>
+{% endif %}
+
+{% if perms.cadastros.view_empresa %}
+<a href="{% url 'url_lista_empresa' %}">
+	<th scope="col"><button type="button" class="btn btn-dark font-detalhes">Listar</button></th>
+</a>
+{% endif %}
+
+{% include 'alertas.html' %}
+<h4 class="titulo-form justify-content-center">Empresa</h4>
+<div class="table-responsive">
+	<table class="table table-bordered table-hover jumbotron lista-fonte text-center">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">Nome da Empresa</th>
+			<th scope="col">CNPJ</th>
+			<th scope="col">CEP</th>
+			<th scope="col">Endereço</th>
+			<th scope="col">Bairro</th>
+			<th scope="col">Cidade</th>
+			<th scope="col">UF</th>
+			<th scope="col">Responsavel</th>
+			<th scope="col">Telefone1</th>
+			<th scope="col">Telefone2</th>
+			<th scope="col">Área de Atuação</th>
+
+			{% if perms.cadastros.change_empresa %}
+			<th scope="col">Editar</th>
+			{% endif %}
+
+			{% if perms.cadastros.delete_empresa %}
+			<th scope="col">Excluir</th>
+			{% endif %}
+
+		</tr>
+		</thead>
+
+		<tbody>
+		<tr>
+			<th scope="row">{{ empresa.nome_empresa }}</th>
+			<td>{{ empresa.cnpj }}</td>
+			<td>{{ empresa.cep }}</td>
+			<td>{{ empresa.endereco }}</td>
+			<td>{{ empresa.bairro }}</td>
+			<td>{{ empresa.cidade }}</td>
+			<td>{{ empresa.uf }}</td>
+
+			{% if empresa.responsavel %}
+			<td>{{ empresa.responsavel }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			{% if empresa.telefone1 %}
+			<td>{{ empresa.telefone1 }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			{% if empresa.telefone2 %}
+			<td>{{ empresa.telefone2 }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			{% if empresa.area_atuacao %}
+			<td>{{ empresa.area_atuacao }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			{% if perms.cadastros.change_empresa %}
+			<td>
+				<a class="card-link" href="{% url 'url_editar_empresa' empresa.id %}">
+					<!--Ícone de edição-->
+					<svg class="bi bi-pencil-square text-dark" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
+						<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z" clip-rule="evenodd"/>
+					</svg>
+				</a>
+			</td>
+			{% endif %}
+
+			{% if perms.cadastros.delete_empresa %}
+			<td> X </td>
+			{% endif %}
+
+		</tr>
+		</tbody>
+
+	</table>
+</div>
+
+{% endblock %}

@@ -1,0 +1,4 @@
+<option value="">---------</option>
+{% for caminhao in caminhoes %}
+    <option value="{{ caminhao.pk }}">{{ caminhao.placa }}</option>
+{% endfor %}

@@ -1,0 +1,181 @@
+{% extends "base.html"%}
+{% load static %}
+{% block title %}Coletas realizadas{% endblock %}
+{% block buscar %}
+<form class="form-inline my-2 my-lg-0" action="{% url 'url_busca_coleta' %}">
+	<input class="form-control mr-sm-2" id="buscar" name="buscar" type="date" style="width: 230px;" placeholder="Data(ano-mês-dia)" aria-label="Search">
+	<button class="btn btn-outline-secondary my-2 my-sm-0" type="submit">Buscar</button>
+</form>
+{% endblock %}
+{% block content %}
+
+{% if perms.eventos.add_coleta %}
+<a href="{% url 'url_cad_coleta' %}">
+	<th scope="col"><button type="button" class="btn btn-dark font-detalhes">Nova Coleta</button></th>
+</a>
+{% endif %}
+
+<a href="{% url 'url_exportar_csv_coleta' %}">
+	<th scope="col"><button type="button" class="btn btn-dark font-detalhes">Exportar CSV</button></th>
+</a>
+<h4 class="titulo-form">Lista de Coletas</h4>
+<div class="table-responsive">
+	<table class="table table-bordered table-hover jumbotron lista-fonte text-center">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">Quant. Retirada</th>
+			<th scope="col">RFID</th>
+			<th scope="col">Grupo</th>
+			<th scope="col">Material</th>
+			<th scope="col">CPF do Motorista</th>
+			<th scope="col">Nome da Empresa</th>
+			<th scope="col">Placa do Caminhão</th>
+			<th scope="col">Peso vazio</th>
+			<th scope="col">Peso carregado</th>
+			<th scope="col">Peso da Carga</th>
+<!--			<th scope="col">Valor da Carga</th>-->
+			<th scope="col">Data e Hora</th>
+
+			{% if perms.eventos.change_coleta %}
+			<th scope="col">Editar</th>
+			{% endif %}
+
+			{% if perms.eventos.delete_coleta %}
+			<th scope="col">Excluir</th>
+			{% endif %}
+
+		</tr>
+		</thead>
+
+		{% for list in lista %}
+		<tbody>
+		<tr>
+			<th scope="row">{{ list.quant_retiradas }}</th>
+			<td>{{ list.cartao_numero }}</td>
+
+			{% if list.grupo %}
+			<td>{{ list.grupo }}</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+			<td>|
+			{% for material in list.material.all %}
+				 {{ material.nome_material }} |
+			{% endfor %}
+			</td>
+
+			<td>{{ list.motorista_cpf }}</td>
+			<td>{{ list.empresa_nome }}</td>
+			<td>{{ list.caminhao_placa }}</td>
+			<td>{{ list.peso_vazio }} Kg</td>
+			<td>{{ list.peso_carregado }} Kg</td>
+
+			{% if list.peso_carga %}
+			<td>{{ list.peso_carga }} Kg</td>
+			{% else %}
+			<td>-</td>
+			{% endif %}
+
+<!--			<td>R$  {{ list.valor_carga_total }}</td>-->
+			<td>{{ list.data_criacao }}</td>
+
+			{% if perms.eventos.change_coleta %}
+			<td>
+				<a class="card-link" href="{% url 'url_editar_coleta' list.id %}">
+					<!--Ícone de edição-->
+					<svg class="bi bi-pencil-square text-dark" width="1.5em" height="1.5em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+						<path d="M15.502 1.94a.5.5 0 010 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 01.707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 00-.121.196l-.805 2.414a.25.25 0 00.316.316l2.414-.805a.5.5 0 00.196-.12l6.813-6.814z"/>
+						<path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 002.5 15h11a1.5 1.5 0 001.5-1.5v-6a.5.5 0 00-1 0v6a.5.5 0 01-.5.5h-11a.5.5 0 01-.5-.5v-11a.5.5 0 01.5-.5H9a.5.5 0 000-1H2.5A1.5 1.5 0 001 2.5v11z" clip-rule="evenodd"/>
+					</svg>
+				</a>
+			</td>
+			{% endif %}
+
+			{% if perms.eventos.delete_coleta %}
+			<td> X </td>
+			{% endif %}
+
+		</tr>
+		</tbody>
+		{% endfor %}
+
+	</table>
+</div>
+{% include 'paginacao.html' %}
+{% endblock %}
+
+<!--
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+	<meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+	<title>Empresas cadastradas</title>
+	<link rel="stylesheet" href="{% static 'cadastros/css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'cadastros/css/style.css' %}"/>
+</head>
+<style type="text/css"></style>
+<body>
+<header>
+	<main>
+		<div class="caixa">
+			<div class="imagen">
+				<img src="{% static 'cadastros/img/lg_logo_.png' %}" alt="logo">
+			</div>
+			<div class="nome">
+				<h1>Smart Cargo Control</h1>
+			</div>
+			<div class="bem-vindo">Bem vindo(a), <strong>{{ user }}</strong> /
+				<a class="bem-vindo" href="{% url 'url_editar_senha' %}">Alterar Senha</a> /
+				<a class="bem-vindo" href="{% url 'url_editar' %}">Alterar Dados</a> /
+				<a class="bem-vindo" href="{% url 'url_logout' %}">Encerrar sessão</a>
+			</div>
+			<div id="divBusca">
+				<input type="text" id="txtBusca" placeholder="Buscar..."/>
+				<button id="btnBusca">Buscar</button>
+			</div>
+		</div>
+		<div class="caixa1">
+			<nav class="menu">
+				<ul>
+					<a href="{% url 'url_index' %}"><li>Home</li></a>
+					<a><li>Cadastro
+						<ul>
+							<a href="{% url 'url_cad_empresa' %}"><li>Empresa</li></a>
+							<a href="{% url 'url_cad_motorista' %}"><li>Motorista</li></a>
+							<a href="{% url 'url_cad_caminhao' %}"><li>Caminhão</li></a>
+							<a href="{% url 'url_cad_coleta' %}"><li>Coleta</li></a>
+						</ul>
+					</li></a>
+					<a href="{% url 'url_cad_coleta' %}"><li>COLETA</li></a>
+				</ul>
+			</nav>
+		</div>
+	</main>
+</header>
+<main>
+	<div class="container">
+		<a class="link"id="paracadastro"></a>
+		<a class="link"id="paralogin"></a>
+		<div class="content">
+				<h4>Empresas cadastradas</h4>
+			{% for list in lista %}
+				<div>
+					<div class="container">
+						<p>Nome: {{ list.nome_empresa }}</p>
+						<p>CNPJ: {{ list.cnpj }}</p>
+						<p></p>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+</main>
+<div class="footer">
+	<p>Footer</p>
+</div>
+</body>
+</html>
+-->
